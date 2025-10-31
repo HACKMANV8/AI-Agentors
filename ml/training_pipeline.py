@@ -35,6 +35,7 @@ def train_loan_model(customer_csv, banks_csv):
     model.fit(X_train, y_train)
     
     # Save model
+    
     with open('loan_model.pkl', 'wb') as f:
         pickle.dump(model, f)
     with open('scaler.pkl', 'wb') as f:
@@ -46,4 +47,3 @@ def train_loan_model(customer_csv, banks_csv):
 
 if _name_ == "_main_":
     train_loan_model("loan_data.csv", "banks_data.csv")
-
