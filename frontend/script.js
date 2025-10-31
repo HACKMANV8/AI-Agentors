@@ -1,54 +1,68 @@
-document.getElementById("loanForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("loanForm");
+  const resultDiv = document.getElementById("result");
 
-  const data = {
-    age: parseInt(document.getElementById("age").value),
-    emp_length: parseInt(document.getElementById("emp_length").value),
-    annual_inc: parseFloat(document.getElementById("annual_inc").value),
-    dti: parseFloat(document.getElementById("dti").value),
-    credit_score: parseFloat(document.getElementById("credit_score").value),
-    loan_amnt: parseFloat(document.getElementById("loan_amnt").value),
-    int_rate: parseFloat(document.getElementById("int_rate").value),
-    loan_tenure: document.getElementById("loan_tenure").value
-  };
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const resultSection = document.getElementById("resultSection");
-  const riskCard = document.getElementById("riskCard");
-  const bankList = document.getElementById("bankList");
+    const formData = {
+      name: document.getElementById("name").value,
+      age: parseFloat(document.getElementById("age").value),
+      emp_length: parseFloat(document.getElementById("emp_length").value),
+      employment_status: document.getElementById("employment_status").value,
+      annual_inc: parseFloat(document.getElementById("annual_inc").value),
+      existing_debt: parseFloat(document.getElementById("existing_debt").value),
+      credit_score: parseFloat(document.getElementById("credit_score").value),
+      loan_amnt: parseFloat(document.getElementById("loan_amnt").value),
+      loan_type: document.getElementById("loan_type").value,
+      loan_tenure: document.getElementById("loan_tenure").value
+    };
 
-  resultSection.classList.remove("hidden");
-  riskCard.innerHTML = "⏳ Analyzing your profile...";
+    try {
+      const response = await fetch("http://127.0.0.1:8081/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
 
-  try {
-    const response = await fetch("http://127.0.0.1:8080/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
 
-    const res = await response.json();
+      const risk = data["risk_score (%)"];
+      let verdict = "";
+      let barColor = "";
 
-    if (!response.ok) throw new Error(res.detail || "API error");
+      if (risk < 25) {
+        verdict = "✅ Low Risk — Likely Approved";
+        barColor = "bg-success";
+      } else if (risk < 60) {
+        verdict = "⚠️ Moderate Risk — Review Needed";
+        barColor = "bg-warning";
+      } else {
+        verdict = "❌ High Risk — Likely Rejected";
+        barColor = "bg-danger";
+      }
 
-    riskCard.innerHTML = `
-      <h3>📊 Risk Score</h3>
-      <p><strong>${res["risk_score (%)"]}%</strong></p>
-    `;
-
-    bankList.innerHTML = "";
-    res.recommended_banks.forEach(bank => {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.innerHTML = `
-        <h4>${bank["Bank Name"]}</h4>
-        <p>💰 Interest: ${bank["Interest Rate (%)"]}%</p>
-        <p>✅ Suitability: ${(bank["suitability_score"] * 100).toFixed(1)}%</p>
+      resultDiv.innerHTML = `
+        <div class="result-card">
+          <h4>${verdict}</h4>
+          <div class="progress mt-2">
+            <div class="progress-bar ${barColor}" role="progressbar" style="width: ${risk}%;">
+              ${risk}%
+            </div>
+          </div>
+          <h5 class="mt-3">🏦 Recommended Banks:</h5>
+          <div class="bank-list">
+            ${data.recommended_banks.map(
+              b => `<div class="bank-item"><strong>${b["Bank Name"]}</strong> — 
+              ${b["Interest Rate (%)"]}% (Suitability: ${(b["suitability_score"]*100).toFixed(1)}%)</div>`
+            ).join("")}
+          </div>
+        </div>
       `;
-      bankList.appendChild(card);
-    });
-
-  } catch (error) {
-    riskCard.innerHTML = `<p style="color:red;">❌ Error: ${error.message}</p>`;
-    bankList.innerHTML = "";
-  }
+    } catch (error) {
+      console.error("Error:", error);
+      resultDiv.innerHTML = `<p style="color:red;">❌ Error: ${error.message}</p>`;
+    }
+  });
 });
