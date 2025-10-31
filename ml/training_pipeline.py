@@ -15,7 +15,6 @@ def train_loan_model(customer_csv, banks_csv):
     df = df[cols].copy()
     df.fillna(df.median(), inplace=True)
     df['is_default'] = (df['loan_status'] == 1).astype(int)
-
     # Feature engineering
     df['emp_length_clean'] = df['emp_length'].str.extract('(\d+)', expand=False).fillna(0).astype(int)
     df['loan_to_income'] = df['loan_amnt'] / df['annual_inc']
