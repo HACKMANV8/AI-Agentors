@@ -10,6 +10,7 @@ def predict_and_recommend(customer_data, model, scaler, feature_columns, banks_d
     risk = model.predict_proba(scaled)[0][1]
 
     # Compute EMI (simplified)
+    
     amount = customer_data["loan_amnt"]
     rate = customer_data["int_rate"] / 100 / 12
     term = 12
