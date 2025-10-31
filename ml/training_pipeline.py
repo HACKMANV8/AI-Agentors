@@ -46,3 +46,4 @@ def train_loan_model(customer_csv, banks_csv):
 
 if _name_ == "_main_":
     train_loan_model("loan_data.csv", "banks_data.csv")
+
