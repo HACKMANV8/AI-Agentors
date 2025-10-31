@@ -51,6 +51,7 @@ def home():
     return {"message": "✅ LoanGuard API is running successfully!"}
 
 # ---------- Predict endpoint ----------
+
 @app.post("/predict")
 def predict_loan(data: LoanRequest):
     try:
