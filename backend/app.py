@@ -6,6 +6,7 @@ import numpy as np
 import uvicorn
 import os
 # ---------- Load model, scaler, and feature columns ----------
+
 def safe_load_pickle(filename):
     if not os.path.exists(filename):
         raise FileNotFoundError(f"❌ Missing required file: {filename}")
