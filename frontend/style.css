@@ -1,67 +1,106 @@
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(120deg, #0099cc, #00ccaa);
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.header {
-  padding: 2rem 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-form {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin: 2rem auto;
-  width: 300px;
+  align-items: center;
+  justify-content: center;
+  color: #333;
 }
 
-input, select, button {
-  padding: 0.7rem;
+.container {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  width: 450px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* 🔥 Stunning Gradient Title */
+h2 {
+  text-align: center;
+  background: linear-gradient(90deg, #007bff, #00c6ff, #007bff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { text-shadow: 0 0 5px rgba(0, 123, 255, 0.3), 0 0 10px rgba(0, 198, 255, 0.3); }
+  50% { text-shadow: 0 0 15px rgba(0, 123, 255, 0.5), 0 0 25px rgba(0, 198, 255, 0.5); }
+}
+
+label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+input, select {
   border-radius: 8px;
-  border: none;
-  font-size: 1rem;
 }
 
 button {
-  background-color: #0066cc;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-top: 20px;
 }
 
 button:hover {
-  background-color: #004c99;
+  background-color: #0056b3;
 }
 
-.card {
-  background: white;
-  color: black;
-  border-radius: 12px;
-  padding: 1rem;
-  margin: 1rem auto;
-  width: 300px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+.result-card {
+  margin-top: 30px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  animation: slideUp 0.6s ease;
+}
+
+.progress {
+  height: 25px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #e9ecef;
+}
+
+.progress-bar {
+  font-weight: 600;
+  color: #fff;
+}
+
+.bank-list {
+  margin-top: 15px;
+}
+
+.bank-item {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.bank-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  margin: 1rem;
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.hidden {
-  display: none;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
