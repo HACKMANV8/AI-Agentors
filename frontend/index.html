@@ -3,42 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoanGuard - AI Loan Predictor</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>LoanGuard - Smart Loan Risk Assessment</title>
+
+  <!-- Google Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header class="header">
-    <h1>💠 LoanGuard</h1>
-    <p>AI-Powered Loan Risk & Bank Recommendation</p>
-  </header>
-  <main>
-    
-    <section class="form-section">
-      <h2>Applicant Information</h2>
-      <form id="loanForm">
-        <input type="number" id="age" placeholder="Age" required />
-        <input type="number" id="emp_length" placeholder="Years Employed" required />
-        <input type="number" id="annual_inc" placeholder="Annual Income (₹)" required />
-        <input type="number" id="dti" placeholder="Debt-to-Income Ratio (e.g. 0.3)" required step="0.01" />
-        <input type="number" id="credit_score" placeholder="Credit Score (300–850)" required />
-        <input type="number" id="loan_amnt" placeholder="Loan Amount (₹)" required />
-        <input type="number" id="int_rate" placeholder="Expected Interest Rate (%)" required step="0.01" />
-        <select id="loan_tenure">
-          <option value="1 year tenure">1 Year Tenure</option>
-          <option value="3 year tenure">3 Year Tenure</option>
-          <option value="5 year tenure">5 Year Tenure</option>
-        </select>
-        <button type="submit">🔍 Get Assessment</button>
-      </form>
-    </section>
+  <div class="container">
+    <h2>🏦 LoanGuard-Risk Assessment</h2>
 
-    <section id="resultSection" class="hidden">
-      <div id="riskCard" class="card"></div>
-      <h3>🏦 Recommended Banks</h3>
-      <div id="bankList" class="bank-grid"></div>
-    </section>
-  </main>
+    <form id="loanForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" class="form-control" required />
 
+      <label for="age">Age</label>
+      <input type="number" id="age" class="form-control" required />
+
+      <label for="emp_length">Employment Length (years)</label>
+      <input type="number" id="emp_length" class="form-control" required />
+
+      <label for="employment_status">Employment Status</label>
+      <select id="employment_status" class="form-control" required>
+        <option value="employed">Employed</option>
+        <option value="self-employed">Self-Employed</option>
+        <option value="unemployed">Unemployed</option>
+        <option value="student">Student</option>
+      </select>
+
+      <label for="annual_inc">Annual Income (₹)</label>
+      <input type="number" id="annual_inc" class="form-control" required />
+
+      <label for="existing_debt">Existing Debt (₹)</label>
+      <input type="number" id="existing_debt" class="form-control" required />
+
+      <label for="credit_score">Credit Score</label>
+      <input type="number" id="credit_score" class="form-control" required />
+
+      <label for="loan_amnt">Loan Amount (₹)</label>
+      <input type="number" id="loan_amnt" class="form-control" required />
+
+      <label for="loan_type">Loan Type</label>
+      <select id="loan_type" class="form-control" required>
+        <option value="Personal">Personal</option>
+        <option value="Home">Home</option>
+        <option value="Car">Car</option>
+        <option value="Education">Education</option>
+      </select>
+
+      <label for="loan_tenure">Loan Tenure</label>
+      <select id="loan_tenure" class="form-control" required>
+        <option value="1 year tenure">1 Year</option>
+        <option value="3 year tenure">3 Years</option>
+        <option value="5 year tenure">5 Years</option>
+      </select>
+
+      <button type="submit">🚀 Get Assessment</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <!-- External JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
