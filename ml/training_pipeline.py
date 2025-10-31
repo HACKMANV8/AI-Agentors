@@ -33,7 +33,6 @@ def train_loan_model(customer_csv, banks_csv):
 
     model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
     model.fit(X_train, y_train)
-
     # Save model
     with open('loan_model.pkl', 'wb') as f:
         pickle.dump(model, f)
