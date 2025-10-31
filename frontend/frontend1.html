@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -285,24 +286,10 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 1024px) {
-      .main-container {
-        flex-direction: column;
-        max-width: 600px;
-      }
-      
-      .hero-section {
-        order: 2;
-      }
-      
-      .form-container {
-        order: 1;
-      }
-    }
-
     @media (max-width: 768px) {
       .form-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        grid-template-columns: 1fr 1fr;
       }
       
       .hero-title {
@@ -554,4 +541,3 @@
   </script>
 </body>
 </html>
-
