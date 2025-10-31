@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
       `;
+      
     } catch (error) {
       console.error("Error:", error);
       resultDiv.innerHTML = `<p style="color:red;">❌ Error: ${error.message}</p>`;
