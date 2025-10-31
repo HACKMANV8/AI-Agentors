@@ -8,6 +8,7 @@ def load_model_and_data():
         scaler = pickle.load(f)
     with open("feature_columns.pkl", "rb") as f:
         features = pickle.load(f)
+        
 #Read csv file
     banks_df = pd.read_csv("banks_data.csv")
     return model, scaler, features, banks_df
