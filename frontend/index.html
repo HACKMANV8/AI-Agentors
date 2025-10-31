@@ -4,384 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LoanGuard - AI Loan Predictor</title>
-
-  <!-- Bootstrap + Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-
-  <style>
-    :root {
-      --primary: #0284c7;
-      --secondary: #0d9488;
-      --accent: #22c55e;
-      --light: #f8fafc;
-      --text-dark: #1e293b;
-      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-    }
-
-    body {
-      background: linear-gradient(135deg, #e0f2fe 0%, #ecfdf5 100%);
-      font-family: 'Inter', 'Segoe UI', sans-serif;
-      padding: 30px;
-    }
-
-    .header {
-      background: var(--gradient);
-      color: white;
-      text-align: center;
-      padding: 50px 30px;
-      border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(2, 132, 199, 0.3);
-      margin-bottom: 40px;
-    }
-
-    .main-card {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-      padding: 30px;
-    }
-
-    .btn-primary {
-      background: var(--gradient);
-      border: none;
-      color: white;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
-    }
-
-    .risk-score {
-      font-size: 64px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-
-    .verdict-box {
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
-    }
-    .verdict-approved {
-      background: #dcfce7;
-      color: #166534;
-    }
-    .verdict-conditional {
-      background: #fef9c3;
-      color: #854d0e;
-    }
-    .verdict-rejected {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    /* DASHBOARD */
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 15px;
-      margin: 25px 0;
-    }
-    .dash-card {
-      background: var(--light);
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 18px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s ease;
-    }
-    .dash-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 15px rgba(2, 132, 199, 0.15);
-    }
-    .dash-card h6 {
-      font-size: 14px;
-      color: #475569;
-      font-weight: 500;
-    }
-    .dash-card p {
-      font-size: 20px;
-      color: var(--primary);
-      font-weight: 700;
-      margin: 5px 0 0;
-    }
-
-    /* BANK OFFERS */
-    .bank-offers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .bank-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      padding: 20px;
-      border-top: 4px solid var(--primary);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .bank-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
-    }
-    .bank-card h5 {
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .recommended::before {
-      content: "⭐ Best Offer";
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: var(--secondary);
-      color: white;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 6px;
-    }
-
-    .footer {
-      text-align: center;
-      color: #64748b;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="header">
-    <h1><i class="fas fa-shield-alt"></i> LoanGuard</h1>
-    <p class="lead mb-0">AI-Powered Loan Risk & Bank Offer Predictor</p>
-  </div>
+  <header class="header">
+    <h1>💠 LoanGuard</h1>
+    <p>AI-Powered Loan Risk & Bank Recommendation</p>
+  </header>
 
-  <div class="main-card">
-    <form id="loanForm" novalidate>
-      <h4 class="mb-3 text-primary"><i class="fas fa-user me-2"></i> Applicant Info</h4>
-
-      <div class="mb-3">
-        <label class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="applicantName" required />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Age</label>
-        <input type="number" class="form-control" id="age" required min="18" max="100" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Employment Status</label>
-        <select class="form-select" id="employment" required>
-          <option value="">Select</option>
-          <option value="Employed">Employed</option>
-          <option value="Self-Employed">Self-Employed</option>
-          <option value="Retired">Retired</option>
-          <option value="Unemployed">Unemployed</option>
+  <main>
+    <section class="form-section">
+      <h2>Applicant Information</h2>
+      <form id="loanForm">
+        <input type="number" id="age" placeholder="Age" required />
+        <input type="number" id="emp_length" placeholder="Years Employed" required />
+        <input type="number" id="annual_inc" placeholder="Annual Income (₹)" required />
+        <input type="number" id="dti" placeholder="Debt-to-Income Ratio (e.g. 0.3)" required step="0.01" />
+        <input type="number" id="credit_score" placeholder="Credit Score (300–850)" required />
+        <input type="number" id="loan_amnt" placeholder="Loan Amount (₹)" required />
+        <input type="number" id="int_rate" placeholder="Expected Interest Rate (%)" required step="0.01" />
+        <select id="loan_tenure">
+          <option value="1 year tenure">1 Year Tenure</option>
+          <option value="3 year tenure">3 Year Tenure</option>
+          <option value="5 year tenure">5 Year Tenure</option>
         </select>
-      </div>
+        <button type="submit">🔍 Get Assessment</button>
+      </form>
+    </section>
 
-      <div class="mb-3">
-        <label class="form-label">Years at Current Job</label>
-        <input type="number" class="form-control" id="yearsEmployed" required min="0" />
-      </div>
+    <section id="resultSection" class="hidden">
+      <div id="riskCard" class="card"></div>
+      <h3>🏦 Recommended Banks</h3>
+      <div id="bankList" class="bank-grid"></div>
+    </section>
+  </main>
 
-      <h4 class="mt-4 mb-3 text-primary"><i class="fas fa-money-bill-wave me-2"></i> Financial Info</h4>
-
-      <div class="mb-3">
-        <label class="form-label">Annual Income (₹)</label>
-        <input type="number" class="form-control" id="annualIncome" required min="0" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Credit Score (300–850)</label>
-        <input type="number" class="form-control" id="creditScore" required min="300" max="850" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Existing Debt (₹)</label>
-        <input type="number" class="form-control" id="existingDebt" required min="0" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Loan Amount (₹)</label>
-        <input type="number" class="form-control" id="loanAmount" required min="0" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Loan Type</label>
-        <select class="form-select" id="loanType" required>
-          <option value="">Select</option>
-          <option value="Personal">Personal</option>
-          <option value="Home">Home</option>
-          <option value="Auto">Auto</option>
-          <option value="Business">Business</option>
-          <option value="Student">Student</option>
-        </select>
-      </div>
-
-      <div class="d-flex flex-wrap gap-2 mt-4">
-        <button type="submit" class="btn btn-primary flex-fill">
-          <i class="fas fa-check-circle"></i> Get Assessment
-        </button>
-        <button type="reset" class="btn btn-secondary flex-fill">
-          <i class="fas fa-redo"></i> Reset
-        </button>
-      </div>
-    </form>
-
-    <!-- RESULTS BELOW FORM -->
-    <div id="resultsContent" class="mt-5 d-none fade-in text-center">
-      <h4 class="text-primary mb-3">Risk Assessment</h4>
-      <div class="risk-score" id="riskScore">--</div>
-      <div id="verdictBox" class="verdict-box verdict-neutral">
-        <h5 id="verdictText">Awaiting Assessment</h5>
-        <p id="verdictMessage" class="mb-0">Complete the form to start.</p>
-      </div>
-
-      <!-- DASHBOARD SUMMARY -->
-      <div id="dashboard" class="dashboard d-none fade-in">
-        <div class="dash-card">
-          <h6><i class="fas fa-wallet me-1"></i> Monthly EMI</h6>
-          <p id="emi">₹0</p>
-        </div>
-        <div class="dash-card">
-          <h6><i class="fas fa-percentage me-1"></i> DTI Ratio</h6>
-          <p id="dti">0%</p>
-        </div>
-        <div class="dash-card">
-          <h6><i class="fas fa-chart-line me-1"></i> Loan/Income</h6>
-          <p id="lti">0%</p>
-        </div>
-        <div class="dash-card">
-          <h6><i class="fas fa-credit-card me-1"></i> Credit Util.</h6>
-          <p id="creditUtil">0%</p>
-        </div>
-      </div>
-
-      <button id="viewBanksBtn" class="btn btn-primary mt-3 d-none">
-        💰 View Best Bank Offers
-      </button>
-
-      <div id="bankOffers" class="bank-offers mt-4 d-none fade-in"></div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>🤖 Built with FastAPI & Bootstrap | 🇮🇳 India Bank Offers</p>
-  </div>
-
-  <script>
-    const API_URL = "http://localhost:8000/api";
-    const form = document.getElementById("loanForm");
-    const results = document.getElementById("resultsContent");
-    const verdictBox = document.getElementById("verdictBox");
-    const riskScoreEl = document.getElementById("riskScore");
-    const viewBanksBtn = document.getElementById("viewBanksBtn");
-    const bankOffersDiv = document.getElementById("bankOffers");
-    const dashboard = document.getElementById("dashboard");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-
-      results.classList.remove("d-none");
-      results.scrollIntoView({ behavior: "smooth" });
-
-      const data = {
-        applicantName: document.getElementById("applicantName").value,
-        age: +document.getElementById("age").value,
-        employment: document.getElementById("employment").value,
-        yearsEmployed: +document.getElementById("yearsEmployed").value,
-        annualIncome: +document.getElementById("annualIncome").value,
-        creditScore: +document.getElementById("creditScore").value,
-        existingDebt: +document.getElementById("existingDebt").value,
-        loanAmount: +document.getElementById("loanAmount").value,
-        loanType: document.getElementById("loanType").value,
-      };
-
-      const response = await fetch(`${API_URL}/predict`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-      updateUI(result);
-      updateDashboard(result);
-      viewBanksBtn.classList.remove("d-none");
-    });
-
-    function updateUI(result) {
-      const risk = result.riskScore || 50;
-      riskScoreEl.textContent = risk;
-      verdictBox.className = "verdict-box";
-      if (risk < 40) {
-        verdictBox.classList.add("verdict-approved");
-        document.getElementById("verdictText").textContent = "APPROVED";
-        document.getElementById("verdictMessage").textContent = "Low risk applicant.";
-      } else if (risk < 70) {
-        verdictBox.classList.add("verdict-conditional");
-        document.getElementById("verdictText").textContent = "CONDITIONAL";
-        document.getElementById("verdictMessage").textContent = "Moderate risk — review needed.";
-      } else {
-        verdictBox.classList.add("verdict-rejected");
-        document.getElementById("verdictText").textContent = "REJECTED";
-        document.getElementById("verdictMessage").textContent = "High risk applicant.";
-      }
-    }
-
-    function updateDashboard(result) {
-      dashboard.classList.remove("d-none");
-      document.getElementById("emi").textContent = "₹" + (result.monthlyEMI || 0).toLocaleString();
-      document.getElementById("dti").textContent = (result.dtiRatio || 0) + "%";
-      document.getElementById("lti").textContent = (result.loanToIncome || 0) + "%";
-      document.getElementById("creditUtil").textContent = (result.creditUtil || 0) + "%";
-    }
-
-    viewBanksBtn.addEventListener("click", async () => {
-      const loanType = document.getElementById("loanType").value;
-      const response = await fetch(`${API_URL}/banks?loan_type=${loanType}`);
-      const banks = await response.json();
-      displayBanks(banks);
-    });
-
-    function displayBanks(banks) {
-      bankOffersDiv.innerHTML = "";
-      bankOffersDiv.classList.remove("d-none");
-      const bestRate = Math.min(...banks.map(b => b.interest_rate));
-      banks.forEach(bank => {
-        const card = document.createElement("div");
-        card.classList.add("bank-card", "fade-in");
-        if (bank.interest_rate === bestRate) card.classList.add("recommended");
-        card.innerHTML = `
-          <h5>${bank.bank_name}</h5>
-          <p><strong>Loan Type:</strong> ${bank.loan_type}</p>
-          <p><strong>Interest Rate:</strong> ${bank.interest_rate}%</p>
-          <p><strong>Max Loan:</strong> ₹${bank.max_amount.toLocaleString()}</p>
-        `;
-        bankOffersDiv.appendChild(card);
-      });
-      bankOffersDiv.scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
