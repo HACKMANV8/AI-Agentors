@@ -9,7 +9,6 @@ def train_loan_model(customer_csv, banks_csv):
     # Step 1: Load and preprocess
     df = pd.read_csv(customer_csv)
     banks_df = pd.read_csv(banks_csv)
-    
     # Simplify: Keep relevant cols
     cols = ['age', 'emp_length', 'annual_inc', 'dti', 'fico_range_low', 'loan_amnt', 'term', 'int_rate', 'loan_status']
     df = df[cols].copy()
