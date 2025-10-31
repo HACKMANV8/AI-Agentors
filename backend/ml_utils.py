@@ -14,7 +14,6 @@ def predict_and_recommend(customer_data, model, scaler, feature_columns, banks_d
     rate = customer_data["int_rate"] / 100 / 12
     term = 12
     emi = (amount * rate * (1 + rate)*term) / ((1 + rate)*term - 1)
-
     # Recommend banks
     loan_tenure = "1 year tenure"
     banks = banks_df[banks_df[loan_tenure].notna()].copy()
