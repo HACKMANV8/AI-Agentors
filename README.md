@@ -16,5 +16,3 @@ AI-powered loan risk assessment and bank recommendation system.
 - **Backend:** FastAPI (Python)
 - **ML:** Scikit-learn Random Forest
 - **Data:** Pandas, NumPy
-
-## 📁 Project Structure
