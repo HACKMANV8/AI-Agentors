@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import uvicorn
 import os
+
 # ---------- Load model, scaler, and feature columns ----------
 
 def safe_load_pickle(filename):
